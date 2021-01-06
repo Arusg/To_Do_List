@@ -1,24 +1,25 @@
 .task {
   text-align: center;
 }
-.task>h2 {
+.title>h2 {
     color: blue;
 }
 
-.task>button {
-    color: blue;
-}
-.card > li {
- width: 180px;
- height: 120px;
+
+.card {
+ width: 170px;
+ height: 270px;
  color: blue;
  border: 1px solid blue;
- list-style-type: none;
- display: inline-block;
  margin: 15px;
- margin-left: 0;
+ padding: 15px;
+ 
 }
 
-i {
-    font-size: 25px !important;
+.icon {
+  width: 40px;
+  height: 40px;
+  font-size: 15px !important;
+  margin: 3px;
+  color: white !important;
 }

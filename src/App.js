@@ -1,20 +1,14 @@
 import React from 'react';
 import './App.css';
-import Product from './Product';
-import ToDo from './components/ToDoList';
+
+import ToDo from './components/toDoList';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
   return (
     <div className="App">
     <ToDo />
-      <Product 
-        name="bananas" 
-        price="1 $" 
-        description="Fresh bananas from Ecuador" 
-      />
-      
-      
      
     </div>
   );

@@ -1,24 +1,26 @@
 import React, { Component } from 'react';
 import './style.css';
-import 'font-awesome/css/font-awesome.min.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {Container, Row, Col, Button, InputGroup, FormControl} from 'react-bootstrap';
 
 
 export default class Todo extends Component {
 
     state = {
         tasks: [],
-        inputValue: ''
+        inputValue: {title: ""}
     }
 
     handleChange = (event) => {
         this.setState({
-            inputValue: event.target.value
+            inputValue: {title: event.target.value}
         });
     };
     addNewTask = () => {
-        const inputValue = this.state.inputValue.trim();
+        const inputValue = {title: this.state.inputValue.title.trim()};
 
-        if (!inputValue) {
+        if (!inputValue.title) {
             return;
         }
 
@@ -27,7 +29,7 @@ export default class Todo extends Component {
 
         this.setState({
             tasks: tasks,
-            inputValue: ''
+            inputValue: {title: ""}
         });
     }
 
@@ -41,21 +43,41 @@ render(){
     const { tasks, inputValue } = this.state;
 
     const taskComponents = tasks.map((task, index) => {
-        return <li key={index}>
-            <div>
-                <h5>{task}</h5>
-                <i className='fa fa-trash' onClick={this.removeTask}></i>
-            </div>
-        </li>
+        return <Col key={index} xs = {12} sm ={6} md={4} lg={3} xl={2}>
+                   <div className="card">
+                        <input type="checkbox" />
+                        <h5>{task.title.slice(0,6)}</h5>
+                        <p>Description:{task.title} </p>
+                        <Button variant="warning" className="icon"><FontAwesomeIcon icon={faEdit} /></Button>
+                        <Button variant="danger" className="icon" onClick={this.removeTask}><FontAwesomeIcon icon={faTrash} /></Button>
+                    </div>
+                </Col>
     });
 
     return (
-        <div className="task">
-            <h2>ToDo List</h2>
-            <input value={inputValue} type="text" onChange={this.handleChange} />
-            <button onClick={this.addNewTask}>Add task</button>
-            <ol className="card">{taskComponents}</ol>
-        </div>
+          
+            <Container className="task">
+                <Row >
+                <Col className="title">
+                        <h2>ToDo List</h2>
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">
+                <Col className="addingTasks" xs = {4} sm ={6} >
+                    <InputGroup>
+                        <FormControl
+                            value={inputValue.title} type="text" onChange={this.handleChange}
+                        />
+                        <InputGroup.Append>
+                            <Button variant="outline-primary" onClick={this.addNewTask}>Add task</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                        
+                    </Col>
+                </Row>
+                <Row className="justify-content-center">{taskComponents}</Row>
+            </Container>
+        
     );
 }
     }
