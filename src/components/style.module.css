@@ -1,7 +1,8 @@
-.task {
-  text-align: center;
+.task{
+margin: 10px 0;
 }
-.title>h2 {
+
+h2 {
     color: blue;
 }
 
