@@ -1,83 +1,129 @@
 import React, { Component } from 'react';
-import './style.css';
+import styles from './style.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import {Container, Row, Col, Button, InputGroup, FormControl} from 'react-bootstrap';
+import { Container, Row, Col, Button, InputGroup, FormControl, Card} from 'react-bootstrap';
+import idGenerator from '../helpers/idGenerator';
 
 
 export default class Todo extends Component {
 
     state = {
+        inputValue: '',
         tasks: [],
-        inputValue: {title: ""}
-    }
+        selectedTasks: []
+    };
 
     handleChange = (event) => {
         this.setState({
-            inputValue: {title: event.target.value}
+            inputValue: event.target.value
         });
     };
     addNewTask = () => {
-        const inputValue = {title: this.state.inputValue.title.trim()};
+        const inputValue = this.state.inputValue.trim();
 
-        if (!inputValue.title) {
+        if (!inputValue) {
             return;
         }
 
-        const tasks = [...this.state.tasks, inputValue];
+        const newTask = {
+            _id: idGenerator(),
+            title: inputValue
+        };
+
+        const tasks = [...this.state.tasks, newTask];
 
 
         this.setState({
             tasks: tasks,
-            inputValue: {title: ""}
+            inputValue: ""
         });
     }
 
-    removeTask = (event) => {
-        console.log(event);
+    removeTask = (taskId) => {
+        const newTasks = this.state.tasks.filter((task) => taskId !== task._id);
+
+        this.setState({
+            tasks: newTasks
+        });
     };
 
-  
-    
-render(){
-    const { tasks, inputValue } = this.state;
+    checkTasks = (taskId) => {
+        const checkedTask = this.state.tasks.find((task) => taskId === task._id);
+        const checkedTasks = [...this.state.selectedTasks];
+        let NewCheckedTasks;
 
-    const taskComponents = tasks.map((task, index) => {
-        return <Col key={index} xs = {12} sm ={6} md={4} lg={3} xl={2}>
-                   <div className="card">
-                        <input type="checkbox" />
-                        <h5>{task.title.slice(0,6)}</h5>
-                        <p>Description:{task.title} </p>
-                        <Button variant="warning" className="icon"><FontAwesomeIcon icon={faEdit} /></Button>
-                        <Button variant="danger" className="icon" onClick={this.removeTask}><FontAwesomeIcon icon={faTrash} /></Button>
-                    </div>
-                </Col>
-    });
+        if (checkedTasks.includes(checkedTask)) {
 
-    return (
-          
-            <Container className="task">
+            NewCheckedTasks = checkedTasks.filter((task) => taskId !== task._id);
+        }
+        else {
+            NewCheckedTasks = [...this.state.selectedTasks, checkedTask];
+        }
+        this.setState({
+            selectedTasks: NewCheckedTasks
+        });
+    };
+
+    removeSelectedTasks = ()=>{
+        if (!this.state.selectedTasks.length) {
+        return;
+        }
+            
+
+        this.setState({
+            
+            selectedTasks: []
+        });
+    };
+
+    render() {
+        const { tasks, inputValue } = this.state;
+
+        const taskComponents = tasks.map((task) => {
+            return <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
+                <Card className={styles.task}>
+                    <Card.Body>
+                        <input type="checkbox" onClick={() => this.checkTasks(task._id)} />
+                        <Card.Title>{task.title.slice(0, 8)}</Card.Title>
+                        <Card.Text>Description:{task.title}</Card.Text>
+                        <Button variant="warning" className={styles.icon}><FontAwesomeIcon icon={faEdit} /></Button>
+                        <Button variant="danger" className={styles.icon} onClick={this.removeTask}><FontAwesomeIcon icon={faTrash} /></Button>
+                    </Card.Body>
+                </Card>
+            </Col>
+        });
+       
+
+       
+        return (
+
+            <Container>
                 <Row >
-                <Col className="title">
+                    <Col className="text-center">
                         <h2>ToDo List</h2>
                     </Col>
                 </Row>
                 <Row className="justify-content-center">
-                <Col className="addingTasks" xs = {4} sm ={6} >
-                    <InputGroup>
-                        <FormControl
-                            value={inputValue.title} type="text" onChange={this.handleChange}
-                        />
-                        <InputGroup.Append>
-                            <Button variant="outline-primary" onClick={this.addNewTask}>Add task</Button>
-                        </InputGroup.Append>
-                    </InputGroup>
-                        
+                    <Col className="styles.addingTasks" xs={4} sm={6} >
+                        <InputGroup>
+                            <FormControl
+                                value={inputValue} type="text" onChange={this.handleChange}
+                            />
+                            <InputGroup.Append>
+                                <Button variant="outline-primary" onClick={this.addNewTask}>Add task</Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+                    </Col>
+                    <Col xs={2} sm={3}>
+                        <Button variant="outline-primary" onClick={this.removeSelectedTasks} >
+                            Remove selected
+                    </Button>
                     </Col>
                 </Row>
                 <Row className="justify-content-center">{taskComponents}</Row>
             </Container>
-        
-    );
-}
+
+        );
     }
+}
