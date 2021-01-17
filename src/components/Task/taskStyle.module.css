@@ -1,9 +1,9 @@
 .task{
-margin: 10px 0;
-}
+    margin: 10px 0;
+    }
 
-h2 {
-    color: blue;
+.selected{
+    border: 1px solid #f00 !important;
 }
 
 .icon {
@@ -12,8 +12,4 @@ h2 {
   font-size: 15px !important;
   margin: 3px;
   color: white !important;
-}
-
-.removeSelected {
-  margin: 10px 0;
 }
