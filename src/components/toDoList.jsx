@@ -11,7 +11,7 @@ export default class Todo extends Component {
     state = {
         inputValue: '',
         tasks: [],
-        selectedTasks: []
+        selectedTasks: new Set()
     };
 
     handleChange = (event) => {
@@ -49,46 +49,53 @@ export default class Todo extends Component {
     };
 
     checkTasks = (taskId) => {
-        const checkedTask = this.state.tasks.find((task) => taskId === task._id);
-        const checkedTasks = [...this.state.selectedTasks];
-        let NewCheckedTasks;
-
-        if (checkedTasks.includes(checkedTask)) {
-
-            NewCheckedTasks = checkedTasks.filter((task) => taskId !== task._id);
+        const selectedTasks = new Set(this.state.selectedTasks);
+        if (selectedTasks.has(taskId)) {
+            selectedTasks.delete(taskId);
         }
         else {
-            NewCheckedTasks = [...this.state.selectedTasks, checkedTask];
+            selectedTasks.add(taskId);
         }
+
         this.setState({
-            selectedTasks: NewCheckedTasks
+            selectedTasks
         });
     };
 
-    removeSelectedTasks = ()=>{
-        if (!this.state.selectedTasks.length) {
-        return;
-        }
-            
+    removeSelectedTasks = (taskId)=>{
+        const { selectedTasks, tasks } = this.state;
+
+        const newTasks = tasks.filter((task) => {
+            if (selectedTasks.has(task._id)) {
+                return false;
+            }
+            return true;
+        });
 
         this.setState({
-            
-            selectedTasks: []
+            tasks: newTasks,
+            selectedTasks: new Set()
         });
+    };
+
+    handleKeyDown = (event)=>{                     
+        if(event.key==="Enter"){
+            this.addNewTask();
+        }
     };
 
     render() {
-        const { tasks, inputValue } = this.state;
+        const { tasks, inputValue, selectedTasks } = this.state;
 
         const taskComponents = tasks.map((task) => {
             return <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
                 <Card className={styles.task}>
                     <Card.Body>
-                        <input type="checkbox" onClick={() => this.checkTasks(task._id)} />
+                        <input type="checkbox" onChange={() => this.checkTasks(task._id)} />
                         <Card.Title>{task.title.slice(0, 8)}</Card.Title>
                         <Card.Text>Description:{task.title}</Card.Text>
                         <Button variant="warning" className={styles.icon}><FontAwesomeIcon icon={faEdit} /></Button>
-                        <Button variant="danger" className={styles.icon} onClick={this.removeTask}><FontAwesomeIcon icon={faTrash} /></Button>
+                        <Button variant="danger" className={styles.icon} onClick={() => this.removeTask(task._id)} disabled={!!selectedTasks.size}><FontAwesomeIcon icon={faTrash} /></Button>
                     </Card.Body>
                 </Card>
             </Col>
@@ -108,15 +115,17 @@ export default class Todo extends Component {
                     <Col className="styles.addingTasks" xs={4} sm={6} >
                         <InputGroup>
                             <FormControl
-                                value={inputValue} type="text" onChange={this.handleChange}
+                                value={inputValue} type="text" onChange={this.handleChange} onKeyDown = {this.handleKeyDown} disabled={!!this.state.selectedTasks.size}
                             />
                             <InputGroup.Append>
-                                <Button variant="outline-primary" onClick={this.addNewTask}>Add task</Button>
+                                <Button variant="outline-primary" onClick={this.addNewTask} disabled={!!selectedTasks.size}>Add task</Button>
                             </InputGroup.Append>
                         </InputGroup>
                     </Col>
+                </Row>
+                <Row className="justify-content-center" >
                     <Col xs={2} sm={3}>
-                        <Button variant="outline-primary" onClick={this.removeSelectedTasks} >
+                        <Button variant="outline-danger" onClick={this.removeSelectedTasks} disabled={!selectedTasks.size} className={styles.removeSelected}>
                             Remove selected
                     </Button>
                     </Col>
