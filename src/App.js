@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-import ToDo from './components/toDoList';
+import ToDo from './components/ToDo/toDoList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
