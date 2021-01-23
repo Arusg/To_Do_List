@@ -14,24 +14,22 @@ class Task extends Component {
     handleChange = () => {
         const { data, onCheck } = this.props;
         onCheck(data._id);
-        this.setState({
-            selected: !this.state.selected,
-        });
+        
     };
 
     render() {
         const task = this.props.data;
-        const { disabled, onDelete } = this.props;
-        const { selected } = this.state;
-
+        const { disabled, onDelete, selected, onEdit } = this.props;
+        
         return (
             <Card className={`${styles.task} ${selected ? styles.selected : ""}`}>
 
                     <Card.Body>
-                    <input type="checkbox" onChange={ this.handleChange } />
-                        <Card.Title>{task.title.slice(0, 8)}</Card.Title>
-                        <Card.Text>Description:{task.title}</Card.Text>
-                        <Button variant="warning" className={styles.icon}><FontAwesomeIcon icon={faEdit} /></Button>
+                    <input type="checkbox" onChange={ this.handleChange } checked={selected}/>
+                        <Card.Title>{task.title}</Card.Title>
+                        <Card.Text>{task.description}</Card.Text>
+                        <Button variant="warning" className={styles.icon} disabled={disabled}
+                        onClick={() => onEdit(task)}><FontAwesomeIcon icon={faEdit} /></Button>
                         <Button variant="danger" className={styles.icon} onClick={() => onDelete(task._id)} disabled={disabled}><FontAwesomeIcon icon={faTrash} /></Button>
                     </Card.Body>
                 
