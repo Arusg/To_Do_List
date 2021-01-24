@@ -1,17 +1,19 @@
-import React, {Component} from 'react';
-import { Button, FormControl, InputGroup } from 'react-bootstrap';
+import React, { Component } from 'react';
+import { Button, FormControl,Modal } from 'react-bootstrap';
 import idGenerator from '../../helpers/idGenerator';
-import PropTypes from 'prop-types'; 
+import PropTypes from 'prop-types';
 
-class NewTask extends Component{
+class NewTask extends Component {
     state = {
         title: '',
-        
+        description: ''
     };
 
     handleChange = (event) => {
+        const { name, value } = event.target;
+
         this.setState({
-            title: event.target.value
+            [name]: value
         });
     };
 
@@ -21,9 +23,9 @@ class NewTask extends Component{
         }
     };
 
-    handleSubmit = ()=>{
+    handleSubmit = () => {
         const title = this.state.title.trim();
-       
+        const description = this.state.description.trim();
 
         if (!title) {
             return;
@@ -32,37 +34,61 @@ class NewTask extends Component{
         const newTask = {
             _id: idGenerator(),
             title,
-           
+            description
         };
 
         this.props.onAdd(newTask);
-        this.setState({
-            title: '',
-            
-        });
+
     };
 
-    render(){
-        const {title} = this.state;
-        const {disabled} = this.props;
+    render() {
+        const { onClose } = this.props;
 
-        return(
-            <InputGroup>
-                            <FormControl
-                                placeholder="Title" value={title} type="text" onChange={this.handleChange} onKeyDown={this.handleKeyDown} disabled={disabled}
-                            />
-                            <InputGroup.Append>
-                                <Button variant="outline-primary" onClick={this.handleSubmit} disabled={disabled}> Add task</Button>
-                            </InputGroup.Append>
-            </InputGroup>
-           
+        return (
+
+            <>
+                <Modal
+                    className={this.props.className}
+                    show={true}
+                    onHide={onClose}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Add new Task
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <FormControl
+                            placeholder="Title" onChange={this.handleChange} name='title' onKeyPress={this.handleKeyDown} className='mb-3'
+                        />
+                        <FormControl
+                            placeholder="Description" as="textarea" 
+                            rows={5} 
+                            name='description' onChange={this.handleChange} 
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button
+                            onClick={this.handleSubmit}
+                            variant='success'
+                        >
+                            Add
+            </Button>
+                        <Button onClick={onClose}>Cancel</Button>
+                    </Modal.Footer>
+                </Modal>
+            </>
+
         );
     }
 }
 
 NewTask.propTypes = {
     onAdd: PropTypes.func.isRequired,
-    disabled: PropTypes.bool.isRequired
+    onClose: PropTypes.func.isRequired,
 };
 
 export default NewTask;
