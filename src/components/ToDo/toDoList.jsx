@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import styles from './style.module.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../Task/task';
@@ -6,7 +6,7 @@ import NewTask from '../NewTask/NewTask';
 import Confirm from '../confirm';
 import EditTaskModal from '../editTaskModal';
 
-export default class Todo extends Component {
+export default class Todo extends PureComponent {
 
     state = {
         tasks: [],
