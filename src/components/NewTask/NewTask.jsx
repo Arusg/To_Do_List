@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import { Button, FormControl,Modal } from 'react-bootstrap';
-import idGenerator from '../../helpers/idGenerator';
 import PropTypes from 'prop-types';
 
 class NewTask extends PureComponent {
@@ -32,7 +31,6 @@ class NewTask extends PureComponent {
         }
 
         const newTask = {
-            _id: idGenerator(),
             title,
             description
         };

@@ -16,23 +16,96 @@ export default class Todo extends PureComponent {
         editTask: null
     };
 
-   
+    componentDidMount(){
+        fetch('http://localhost:3001/task', {
+            method: 'GET',
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+            .then(async (response) => {
+                const res = await response.json();
+
+                if(response.status >=400 && response.status < 600){
+                    if(res.error){
+                        throw res.error;
+                    }
+                    else {
+                        throw new Error('Something went wrong!');
+                    }
+                }
+
+                this.setState({
+                    tasks: res
+                });
+
+            })
+            .catch((error)=>{
+                console.log('catch error', error);
+            });
+
+    }
     addNewTask = (newTask) => {
-        const tasks = [...this.state.tasks, newTask];
+        fetch('http://localhost:3001/task', {
+            method: 'POST',
+            body: JSON.stringify(newTask),
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+            .then(async (response) => {
+                const res = await response.json();
 
-        this.setState({
-            tasks,
-            openNewTaskModal: false
-        });
+                if (response.status >= 400 && response.status < 600) {
+                    if (res.error) {
+                        throw res.error;
+                    }
+                    else {
+                        throw new Error('Something went wrong!');
+                    }
+                }
 
+                const tasks = [...this.state.tasks, res];
+
+                this.setState({
+                    tasks,
+                    openNewTaskModal: false
+                });
+
+            })
+            .catch((error) => {
+                console.log('catch error', error);
+            });
     };
 
     removeTask = (taskId) => {
-        const newTasks = this.state.tasks.filter((task) => taskId !== task._id);
+        fetch(`http://localhost:3001/task/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+            .then(async (response) => {
+                const res = await response.json();
 
-        this.setState({
-            tasks: newTasks
-        });
+                if (response.status >= 400 && response.status < 600) {
+                    if (res.error) {
+                        throw res.error;
+                    }
+                    else {
+                        throw new Error('Something went wrong!');
+                    }
+                }
+
+                const newTasks = this.state.tasks.filter((task) => taskId !== task._id);
+
+                this.setState({
+                    tasks: newTasks
+                });
+            })
+            .catch((error) => {
+                console.log('catch error', error);
+            });
     };
 
     checkTasks = (taskId) => {
@@ -50,6 +123,7 @@ export default class Todo extends PureComponent {
     };
 
     removeSelectedTasks = () => {
+        
         const { selectedTasks, tasks } = this.state;
 
         const newTasks = tasks.filter((task) => {
@@ -92,18 +166,68 @@ export default class Todo extends PureComponent {
     };
 
     handleEdit = (editTask)=>{
-        this.setState({ editTask });
+        fetch(`http://localhost:3001/task/${editTask._id}`, {
+            method: 'PUT',
+            body: JSON.stringify(editTask),
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+        .then(async (response) => {
+                const res = await response.json();
+
+                if (response.status >= 400 && response.status < 600) {
+                    if (res.error) {
+                        throw res.error;
+                    }
+                    else {
+                        throw new Error('Something went wrong!');
+                    }
+                }
+
+            this.setState({ editTask });
+            })
+            .catch((error) => {
+                console.log('catch error', error);
+            });
     };
 
-    handleSaveTask = (editedTask)=>{
-        const tasks = [...this.state.tasks];
-        const foundIndex = tasks.findIndex((task)=> task._id === editedTask._id);
-        tasks[foundIndex] = editedTask;
         
-        this.setState({
-            tasks,
-            editTask: null
-        });
+   
+
+    handleSaveTask = (editedTask)=>{
+        fetch(`http://localhost:3001/task/${editedTask._id}`, {
+            method: 'PUT',
+            body: JSON.stringify(editedTask),
+            headers: {
+                "Content-Type": 'application/json'
+            }
+        })
+        .then(async (response) => {
+                const res = await response.json();
+
+                if (response.status >= 400 && response.status < 600) {
+                    if (res.error) {
+                        throw res.error;
+                    }
+                    else {
+                        throw new Error('Something went wrong!');
+                    }
+                }
+
+            const tasks = [...this.state.tasks];
+            const foundIndex = tasks.findIndex((task) => task._id === editedTask._id);
+            tasks[foundIndex] = editedTask;
+
+            this.setState({
+                tasks,
+                editTask: null
+            });
+            })
+            .catch((error) => {
+                console.log('catch error', error);
+            });
+        
     };
 
    
