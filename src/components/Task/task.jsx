@@ -4,7 +4,8 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Card, Button } from 'react-bootstrap';
 import styles from './taskStyle.module.css';
 import PropTypes from 'prop-types';
-import {formatDate} from '../../helpers/utils'; 
+import {formatDate} from '../../helpers/utils';
+
 
 
 class Task extends PureComponent {
