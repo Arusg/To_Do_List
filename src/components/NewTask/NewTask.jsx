@@ -1,11 +1,15 @@
 import React, { PureComponent } from 'react';
 import { Button, FormControl,Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import {formatDate} from '../../helpers/utils';
 
 class NewTask extends PureComponent {
     state = {
         title: '',
-        description: ''
+        description: '',
+        date: new Date()
     };
 
     handleChange = (event) => {
@@ -29,14 +33,21 @@ class NewTask extends PureComponent {
         if (!title) {
             return;
         }
-
+        const {date} = this.state;
         const newTask = {
             title,
-            description
+            description,
+            date: formatDate(date.toISOString())
         };
 
         this.props.onAdd(newTask);
 
+    };
+
+     handleChangeDate=(value)=>{
+      this.setState({
+        date: value || new Date()
+      });
     };
 
     render() {
@@ -67,6 +78,12 @@ class NewTask extends PureComponent {
                             rows={5} 
                             name='description' onChange={this.handleChange} 
                         />
+                        <DatePicker 
+                            minDate = {new Date()}
+                            selected={this.state.date}
+                            onChange={this.handleChangeDate}
+                        />
+
                     </Modal.Body>
                     <Modal.Footer>
                         <Button
@@ -74,7 +91,7 @@ class NewTask extends PureComponent {
                             variant='success'
                         >
                             Add
-            </Button>
+                        </Button>
                         <Button onClick={onClose}>Cancel</Button>
                     </Modal.Footer>
                 </Modal>
