@@ -7,6 +7,7 @@ import Contact from './components/pages/Contact/Contact';
 import NotFound from './components/pages/NotFound/NotFound';
 import NavMenu from './components/NavMenu/NavMenu';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import SingleTask from './components/pages/SingleTask/SingleTask';
 
 function App() {
   return (
@@ -34,6 +35,11 @@ function App() {
           <Route
             path='/contact'
             component={Contact}
+            exact
+          />
+          <Route 
+            path='/task/:taskId'
+            component = {SingleTask}
             exact
           />
           <Route

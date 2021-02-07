@@ -13,6 +13,7 @@ export default function NavMenu() {
                     to='/'
                     activeClassName={styles.active}
                     exact
+                    className="mr-3"
                 >
                     Home
                 </NavLink>
@@ -20,6 +21,7 @@ export default function NavMenu() {
                     to='/about'
                     activeClassName={styles.active}
                     exact
+                    className="mr-3"
                 >
                     About us
                 </NavLink>
@@ -27,6 +29,7 @@ export default function NavMenu() {
                     to='/contact'
                     activeClassName={styles.active}
                     exact
+                    className="mr-3"
                 >
                     Contact us
                 </NavLink>
