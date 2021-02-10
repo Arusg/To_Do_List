@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react';
-import styles from './style.module.css';
+//import styles from './todo.module.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import Task from '../Task/task';
-import NewTask from '../NewTask/NewTask';
-import Confirm from '../confirm';
-import EditTaskModal from '../editTaskModal';
+import Task from '../../Task/task';
+import NewTask from '../../NewTask/NewTask';
+import Confirm from '../../confirm';
+import EditTaskModal from '../../editTaskModal';
 
 export default class Todo extends PureComponent {
 
@@ -246,9 +246,7 @@ export default class Todo extends PureComponent {
                 />
             </Col>
         });
-
-
-
+ 
         return (
         <div>
             <Container>
@@ -283,7 +281,7 @@ export default class Todo extends PureComponent {
                     </Col>
                     <Col xs={2} sm={3}>
                         <Button 
-                        variant="outline-danger" onClick={this.checkConfirm} disabled={!selectedTasks.size} className={styles.removeSelected}>
+                        variant="outline-danger" onClick={this.checkConfirm} disabled={!selectedTasks.size} >
                             Remove selected
                         </Button>
                     </Col>
