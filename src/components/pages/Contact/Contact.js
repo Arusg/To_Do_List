@@ -79,12 +79,13 @@ export default function Contact(){
                     }
 
                     console.log('Form sent successfully');
+                    if (response.status >= 200 && response.status <= 300){
                     setValues({
                         name: '',
                         email: '',
                         message: ''
                     });
-
+                }
                 })
                 .catch((error) => {
                     console.log('catch error', error);

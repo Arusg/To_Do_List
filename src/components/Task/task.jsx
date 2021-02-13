@@ -4,8 +4,8 @@ import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Card, Button } from 'react-bootstrap';
 import styles from './taskStyle.module.css';
 import PropTypes from 'prop-types';
-import {formatDate} from '../../helpers/utils';
-
+import {formatDate, textTruncate} from '../../helpers/utils';
+import { Link } from 'react-router-dom';
 
 
 class Task extends PureComponent {
@@ -26,8 +26,8 @@ class Task extends PureComponent {
 
                     <Card.Body>
                     <input type="checkbox" onChange={ this.handleChange } checked={selected}/>
-                        <Card.Title>{task.title}</Card.Title>
-                        <Card.Text>{task.description}</Card.Text> 
+                    <Link to={`/task/${task._id}`}><Card.Title>{textTruncate(task.title, 25)}</Card.Title></Link>
+                    <Card.Text>Description: {textTruncate(task.description, 50)}</Card.Text>  
                         <Card.Text> Date: {formatDate(task.date)}</Card.Text>
                         <Button variant="warning" className={styles.icon} disabled={disabled}
                         onClick={() => onEdit(task)}><FontAwesomeIcon icon={faEdit} /></Button>
