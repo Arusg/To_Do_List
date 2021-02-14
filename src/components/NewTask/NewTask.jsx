@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import { Button, FormControl,Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
@@ -6,11 +6,18 @@ import "react-datepicker/dist/react-datepicker.css";
 import {formatDate} from '../../helpers/utils';
 
 class NewTask extends PureComponent {
-    state = {
-        title: '',
-        description: '',
-        date: new Date()
-    };
+    constructor(props){
+    super(props);
+        this.state = {
+            title: '',
+            description: '',
+            date: new Date()
+        };
+        this.inputRef = createRef();
+}
+    componentDidMount(){
+    this.inputRef.current.focus();
+}
 
     handleChange = (event) => {
         const { name, value } = event.target;
@@ -71,7 +78,7 @@ class NewTask extends PureComponent {
                     </Modal.Header>
                     <Modal.Body>
                         <FormControl
-                            placeholder="Title" onChange={this.handleChange} name='title' onKeyPress={this.handleKeyDown} className='mb-3'
+                            placeholder="Title" onChange={this.handleChange} name='title' onKeyPress={this.handleKeyDown} className='mb-3' ref = {this.inputRef}
                         />
                         <FormControl
                             placeholder="Description" as="textarea" 

@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 class Task extends PureComponent {
     
-
     handleChange = () => {
         const { data, onCheck } = this.props;
         onCheck(data._id);
