@@ -8,6 +8,7 @@ import NotFound from './components/pages/NotFound/NotFound';
 import NavMenu from './components/NavMenu/NavMenu';
 import SingleTask from './components/pages/SingleTask/SingleTask';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import SingleTask from './components/pages/SingleTask/SingleTask';
 
 function App() {
   return (
@@ -41,7 +42,10 @@ function App() {
             path='/task/:taskId'
             component = {SingleTask}
             exact
-           />
+
+
+          />
+
           <Route
             path='/not-found'
             component={NotFound}
