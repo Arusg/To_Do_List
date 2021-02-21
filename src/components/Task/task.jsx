@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 
 class Task extends PureComponent {
     
-
     handleChange = () => {
         const { data, onCheck } = this.props;
         onCheck(data._id);
@@ -26,8 +25,11 @@ class Task extends PureComponent {
 
                     <Card.Body>
                     <input type="checkbox" onChange={ this.handleChange } checked={selected}/>
+  
+
                     <Link to={`/task/${task._id}`}><Card.Title>{task.title}</Card.Title></Link>
                     <Card.Text>Description: {textTruncate(task.description)}</Card.Text> 
+
                         <Card.Text> Date: {formatDate(task.date)}</Card.Text>
                         <Button variant="warning" className={styles.icon} disabled={disabled}
                         onClick={() => onEdit(task)}><FontAwesomeIcon icon={faEdit} /></Button>

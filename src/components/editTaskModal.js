@@ -1,4 +1,4 @@
-import React, {PureComponent} from 'react';
+import React, {PureComponent, createRef } from 'react';
 import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
@@ -14,7 +14,13 @@ class EditTaskModal extends PureComponent{
         ...props.data,
         date: date ? new Date(date) : new Date()
     };
+
+    this.inputRef = createRef();
   }
+
+    componentDidMount(){
+      this.inputRef.current.focus();
+    }
 
     handleChange = (event) => {
         const {name, value} = event.target;
@@ -77,7 +83,7 @@ class EditTaskModal extends PureComponent{
             name='title'
             value={title}
               onKeyPress={this.handleKeyDown}
-              className='mb-3'
+              className='mb-3' ref = {this.inputRef}
           />
           <FormControl 
           placeholder="Description"

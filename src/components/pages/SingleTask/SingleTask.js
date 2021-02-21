@@ -1,3 +1,4 @@
+
 import React, {Component} from 'react';
 import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,11 +8,14 @@ import EditTaskModal from '../../editTaskModal';
 
 export default class SingleTask extends Component{
     state={
+
         task: null,
         openEditModal: false
     };
 
+
     componentDidMount(){
+
         const taskId = this.props.match.params.taskId;
         fetch(`http://localhost:3001/task/${taskId}`, {
             method: 'GET',
@@ -22,8 +26,10 @@ export default class SingleTask extends Component{
             .then(async (response) => {
                 const res = await response.json();
 
+
                 if(response.status >=400 && response.status < 600){
                     if(res.error){
+
                         throw res.error;
                     }
                     else {
@@ -37,11 +43,14 @@ export default class SingleTask extends Component{
 
             })
             .catch((error)=>{
+
                 console.log('catch error', error);
             });
     }
 
+
     deleteTask = ()=>{
+
         const taskId = this.state.task._id;
         fetch(`http://localhost:3001/task/${taskId}`, {
             method: 'DELETE',
@@ -51,24 +60,30 @@ export default class SingleTask extends Component{
         })
             .then(async (response) => {
                 const res = await response.json();
+
     
                 if(response.status >=400 && response.status < 600){
                     if(res.error){
+
                         throw res.error;
                     }
                     else {
                         throw new Error('Something went wrong!');
                     }
                 }
+
                 
                 this.props.history.push('/');
             })
             .catch((error)=>{
+
                 console.log('catch error', error);
             });
     }
 
+
     handleSaveTask = (editedTask)=>{
+
         fetch(`http://localhost:3001/task/${editedTask._id}`, {
             method: 'PUT',
             headers: {
@@ -79,14 +94,17 @@ export default class SingleTask extends Component{
             .then(async (response) => {
                 const res = await response.json();
 
+
                 if(response.status >=400 && response.status < 600){
                     if(res.error){
+
                         throw res.error;
                     }
                     else {
                         throw new Error('Something went wrong!');
                     }
                 }
+
                 
         this.setState({
             task: res,
@@ -95,6 +113,7 @@ export default class SingleTask extends Component{
               
             })
             .catch((error)=>{
+
                 console.log('catch error', error);
             });
 
@@ -102,11 +121,14 @@ export default class SingleTask extends Component{
 
     };
 
+
     toggleEditModal = ()=>{
+
         this.setState({
             openEditModal: !this.state.openEditModal
         });
     };
+
 
 render(){
     const {task, openEditModal} = this.state;
@@ -165,6 +187,7 @@ render(){
      </div>
     );
 }
+
 
 
 };
