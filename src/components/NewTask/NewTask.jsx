@@ -1,23 +1,20 @@
-import React, { PureComponent, createRef } from 'react';
+import React, { PureComponent} from 'react';
 import { Button, FormControl,Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {formatDate} from '../../helpers/utils';
+import {connect} from 'react-redux';
+import {addTask} from '../../Store/Actions';
 
 class NewTask extends PureComponent {
-    constructor(props){
-    super(props);
-        this.state = {
+    
+        state = {
             title: '',
             description: '',
             date: new Date()
         };
-        this.inputRef = createRef();
-}
-    componentDidMount(){
-    this.inputRef.current.focus();
-}
+ 
 
     handleChange = (event) => {
         const { name, value } = event.target;
@@ -47,7 +44,7 @@ class NewTask extends PureComponent {
             date: formatDate(date.toISOString())
         };
 
-        this.props.onAdd(newTask);
+        this.props.addTask(newTask);
 
     };
 
@@ -78,7 +75,7 @@ class NewTask extends PureComponent {
                     </Modal.Header>
                     <Modal.Body>
                         <FormControl
-                            placeholder="Title" onChange={this.handleChange} name='title' onKeyPress={this.handleKeyDown} className='mb-3' ref = {this.inputRef}
+                            placeholder="Title" onChange={this.handleChange} name='title' onKeyPress={this.handleKeyDown} className='mb-3' 
                         />
                         <FormControl
                             placeholder="Description" as="textarea" 
@@ -109,8 +106,11 @@ class NewTask extends PureComponent {
 }
 
 NewTask.propTypes = {
-    onAdd: PropTypes.func.isRequired,
     onClose: PropTypes.func.isRequired,
 };
 
-export default NewTask;
+const mapDispatchToProps = {
+  addTask
+};
+
+export default connect(null, mapDispatchToProps)(NewTask);
