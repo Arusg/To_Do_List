@@ -79,14 +79,12 @@ export default function Contact(){
                         
                     }
 
-                    
-                    if (response.status >= 200 && response.status <= 300){
                     setValues({
                         name: '',
                         email: '',
                         message: ''
                     });
-                }
+                
                 })
                 .catch((error) => {
                     console.log('catch error', error);
