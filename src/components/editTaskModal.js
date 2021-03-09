@@ -3,7 +3,9 @@ import { Button, FormControl, Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {formatDate} from '../helpers/utils'; 
+import {formatDate} from '../helpers/utils';
+import {editTask} from '../Store/Actions';
+import {connect} from 'react-redux'; 
 
 class EditTaskModal extends PureComponent{
   constructor(props){
@@ -39,17 +41,19 @@ class EditTaskModal extends PureComponent{
     handleSubmit = ()=>{
         const title = this.state.title.trim();
         const description = this.state.description.trim();
-
+      console.log(title);
         if (!title) {
             return;
         }
 
-        this.props.onSave({
-          _id: this.state._id,
-          title,
-          description,
-          date: formatDate(this.state.date.toISOString())
-        });
+      const editedTask = {
+        _id: this.state._id,
+        title,
+        description,
+        date: formatDate(this.state.date.toISOString())
+      };
+
+      this.props.editTask(editedTask, this.props.from);
     };
 
     handleChangeDate=(value)=>{
@@ -118,7 +122,10 @@ class EditTaskModal extends PureComponent{
 EditTaskModal.propTypes = {
     data: PropTypes.object.isRequired,
     onClose: PropTypes.func.isRequired,
-    onSave: PropTypes.func.isRequired
 };
 
-export default EditTaskModal;
+const mapDispatchToProps = {
+  editTask
+};
+
+export default connect(null, mapDispatchToProps)(EditTaskModal);

@@ -23,21 +23,27 @@ class Todo extends Component {
 
 
     componentDidUpdate(prevProps) {
-        if (!prevProps.addTaskSuccess && this.props.addTaskSuccess){
+        if (!prevProps.addTaskSuccess && this.props.addTaskSuccess) {
             this.setState({
                 openNewTaskModal: false
             });
             return;
         }
 
-        if (!prevProps.deleteTasksSuccess && this.props.deleteTasksSuccess){
+        if (!prevProps.deleteTasksSuccess && this.props.deleteTasksSuccess) {
             this.setState({
                 selectedTasks: new Set(),
                 showConfirm: false
             });
             return;
         }
-           
+
+        if (!prevProps.editTasksSuccess && this.props.editTasksSuccess) {
+            this.setState({
+               editTask: null
+            });
+            return;
+        }
     }
 
     
@@ -67,7 +73,7 @@ class Todo extends Component {
     };
 
     selectAll = () => {
-        const taskIds = this.state.tasks.map((task) => task._id);
+        const taskIds = this.props.tasks.map((task) => task._id);
         this.setState({
             selectedTasks: new Set(taskIds)
         });
@@ -214,7 +220,8 @@ const mapStateToProps = (state) => {
     return {
         tasks: state.tasks,
         addTaskSuccess: state.addTaskSuccess,
-        deleteTasksSuccess: state.deleteTasksSuccess
+        deleteTasksSuccess: state.deleteTasksSuccess,
+        editTasksSuccess: state.editTasksSuccess
     };
 };
 const mapDispatchToProps = {
