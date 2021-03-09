@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { Card, Button, Container, Row, Col } from 'react-bootstrap';
+
+import React, {Component} from 'react';
+import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { formatDate } from '../../../helpers/utils';
+import {formatDate} from '../../../helpers/utils';
 import EditTaskModal from '../../editTaskModal';
 import  {getTask} from '../../../Store/Actions';
 import {connect} from 'react-redux';
@@ -10,15 +11,22 @@ import {connect} from 'react-redux';
 
 class SingleTask extends Component {
     state = {
+
         openEditModal: false
     };
 
-    componentDidMount() {
+
+    componentDidMount(){
+
         const taskId = this.props.match.params.taskId;
+
         this.props.getTask(taskId);
+
     }
 
-    deleteTask = () => {
+
+    deleteTask = ()=>{
+
         const taskId = this.state.task._id;
         fetch(`http://localhost:3001/task/${taskId}`, {
             method: 'DELETE',
@@ -29,8 +37,10 @@ class SingleTask extends Component {
             .then(async (response) => {
                 const res = await response.json();
 
-                if (response.status >= 400 && response.status < 600) {
-                    if (res.error) {
+    
+                if(response.status >=400 && response.status < 600){
+                    if(res.error){
+
                         throw res.error;
                     }
                     else {
@@ -38,19 +48,24 @@ class SingleTask extends Component {
                     }
                 }
 
+                
                 this.props.history.push('/');
             })
-            .catch((error) => {
+            .catch((error)=>{
+
                 console.log('catch error', error);
             });
     }
 
+
     
     toggleEditModal = () => {
+
         this.setState({
             openEditModal: !this.state.openEditModal
         });
     };
+
 
     render() {
         const { openEditModal } = this.state;
@@ -109,6 +124,7 @@ class SingleTask extends Component {
             </div>
         );
     }
+
 
 
 };

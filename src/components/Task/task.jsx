@@ -25,8 +25,11 @@ class Task extends PureComponent {
 
                     <Card.Body>
                     <input type="checkbox" onChange={ this.handleChange } checked={selected}/>
-                    <Link to={`/task/${task._id}`}><Card.Title>{textTruncate(task.title, 25)}</Card.Title></Link>
-                    <Card.Text>Description: {textTruncate(task.description, 50)}</Card.Text>  
+  
+
+                    <Link to={`/task/${task._id}`}><Card.Title>{task.title}</Card.Title></Link>
+                    <Card.Text>Description: {textTruncate(task.description)}</Card.Text> 
+
                         <Card.Text> Date: {formatDate(task.date)}</Card.Text>
                         <Button variant="warning" className={styles.icon} disabled={disabled}
                         onClick={() => onEdit(task)}><FontAwesomeIcon icon={faEdit} /></Button>

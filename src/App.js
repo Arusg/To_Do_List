@@ -8,6 +8,7 @@ import NotFound from './components/pages/NotFound/NotFound';
 import NavMenu from './components/NavMenu/NavMenu';
 import SingleTask from './components/pages/SingleTask/SingleTask';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+
 import Spinner from './components/Spinner/Spinner';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
@@ -38,6 +39,7 @@ function App({loading,successMessage, errorMessage}) {
     }
     
   }, [successMessage, errorMessage]);
+
 
   return (
     <div className="App">
@@ -70,7 +72,10 @@ function App({loading,successMessage, errorMessage}) {
             path='/task/:taskId'
             component = {SingleTask}
             exact
-           />
+
+
+          />
+
           <Route
             path='/not-found'
             component={NotFound}

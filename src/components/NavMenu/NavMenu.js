@@ -29,6 +29,7 @@ export default function NavMenu() {
                     to='/contact'
                     activeClassName={styles.active}
                     exact
+                    className="mr-3"
                 >
                     Contact us
                 </NavLink>
