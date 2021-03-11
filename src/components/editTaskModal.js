@@ -41,7 +41,7 @@ class EditTaskModal extends PureComponent{
     handleSubmit = ()=>{
         const title = this.state.title.trim();
         const description = this.state.description.trim();
-      console.log(title);
+    
         if (!title) {
             return;
         }
