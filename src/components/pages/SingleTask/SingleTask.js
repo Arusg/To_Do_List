@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import {formatDate} from '../../../helpers/utils';
 import EditTaskModal from '../../editTaskModal';
-import  {getTask} from '../../../Store/Actions';
+import  {getTask,  deleteTask} from '../../../Store/Actions';
 import {connect} from 'react-redux';
 
 
@@ -25,36 +25,19 @@ class SingleTask extends Component {
     }
 
 
-    deleteTask = ()=>{
+    componentDidUpdate(prevProps) {
+        if (!prevProps.editTaskSuccess && this.props.editTaskSuccess) {
+            this.setState({
+                openEditModal: false
 
-        const taskId = this.state.task._id;
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": 'application/json'
-            }
-        })
-            .then(async (response) => {
-                const res = await response.json();
-
-    
-                if(response.status >=400 && response.status < 600){
-                    if(res.error){
-
-                        throw res.error;
-                    }
-                    else {
-                        throw new Error('Something went wrong!');
-                    }
-                }
-
-                
-                this.props.history.push('/');
-            })
-            .catch((error)=>{
-
-                console.log('catch error', error);
             });
+            return;
+        }
+    }
+
+    deleteTask = () => {
+        const taskId = this.props.task._id;
+        this.props.deleteTask(taskId, 'single');
     }
 
 
@@ -91,6 +74,7 @@ class SingleTask extends Component {
                                                 className='m-1'
                                                 variant="warning"
                                                 onClick={this.toggleEditModal}
+                                                
                                             >
                                                 <FontAwesomeIcon icon={faEdit} />
                                             </Button>
@@ -131,12 +115,14 @@ class SingleTask extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        task: state.task
+        task: state.task,
+        editTaskSuccess: state.editTaskSuccess
     };
 };
 
 const mapDispatchToProps = {
-    getTask
+    getTask,
+    deleteTask
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);

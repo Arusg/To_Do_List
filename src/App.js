@@ -7,12 +7,14 @@ import Contact from './components/pages/Contact/Contact';
 import NotFound from './components/pages/NotFound/NotFound';
 import NavMenu from './components/NavMenu/NavMenu';
 import SingleTask from './components/pages/SingleTask/SingleTask';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+
+import { Router, Route, Switch, Redirect} from 'react-router-dom';
 
 import Spinner from './components/Spinner/Spinner';
 import {connect} from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import {history} from './helpers/history';
 
 function App({loading,successMessage, errorMessage}) {
    useEffect(()=>{
@@ -44,7 +46,7 @@ function App({loading,successMessage, errorMessage}) {
   return (
     <div className="App">
 
-      <BrowserRouter>
+      <Router history={history}>
         <NavMenu />
 
         <Switch>
@@ -85,7 +87,7 @@ function App({loading,successMessage, errorMessage}) {
           <Redirect to='/not-found' />
         </Switch>
 
-      </BrowserRouter>
+      </Router>
       { loading && <Spinner />}
       <ToastContainer />
     </div>

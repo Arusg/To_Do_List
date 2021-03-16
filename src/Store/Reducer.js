@@ -23,6 +23,7 @@ export default function reducer(state = defaultState, action) {
           addTaskSuccess: false,
           deleteTasksSuccess: false,
           editTasksSuccess: false,
+          editTaskSuccess: false,
           successMessage: null,
           errorMessage: null            
         };
@@ -62,6 +63,16 @@ export default function reducer(state = defaultState, action) {
         }
         case actionTypes.DELETE_TASK: {
 
+            if (action.from === 'single') {
+                return {
+                    ...state,
+                    task: null,
+                    loading: false,
+                    successMessage: 'Task deleted successfully!!!'
+                };
+
+            }
+
             const newTasks = state.tasks.filter((task) => action.taskId !== task._id);
             return {
                 ...state,
@@ -89,6 +100,17 @@ export default function reducer(state = defaultState, action) {
             };
         }
         case actionTypes.EDIT_TASK: {
+            if (action.from === 'single') {
+                return {
+                    ...state,
+                    task: action.editedTask,
+                    editTaskSuccess: true,
+                    loading: false,
+                    successMessage: 'Task edited successfully!'
+                };
+
+            }
+
             const tasks = [...state.tasks];
             const foundIndex = tasks.findIndex((task) => task._id === action.editedTask._id);
             tasks[foundIndex] = action.editedTask;
@@ -98,7 +120,7 @@ export default function reducer(state = defaultState, action) {
                 tasks,
                 editTasksSuccess: true,
                 loading: false,
-                successMessage: 'Task edited successfully!!!'
+                successMessage: 'Task edited successfully!'
             };
         }
         default: return state;
