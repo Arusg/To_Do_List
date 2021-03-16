@@ -1,0 +1,15 @@
+.filter {
+    margin-top: 10px;
+    color: rgb(65, 140, 236);
+    
+} 
+
+.filterBoxes {
+    border: none;
+    border: 1px solid  rgb(65, 140, 236);
+}
+
+.searchBox {
+    border: none;
+    border: 1px solid  rgb(65, 140, 236) !important;
+}

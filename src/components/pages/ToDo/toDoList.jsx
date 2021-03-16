@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-//import styles from './todo.module.css';
+import styles from './style.module.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import Task from '../../Task/task';
 import NewTask from '../../NewTask/NewTask';
@@ -7,6 +7,7 @@ import Confirm from '../../confirm';
 import EditTaskModal from '../../editTaskModal';
 import { connect } from 'react-redux';
 import { getTasks, deleteTask,deleteTasks } from '../../../Store/Actions';
+import Search from '../../Search/Search';
 
 class Todo extends Component {
 
@@ -152,10 +153,14 @@ class Todo extends Component {
             <Container>
                 <Row >
                     <Col className="text-center">
-                        <h2>ToDo List</h2>
+                        <h2 className={styles.title}>ToDo List</h2>
                     </Col>
                 </Row>
-                
+                <Row>
+                    <Col>
+                        <Search />
+                    </Col>
+                </Row>
                 <Row className="justify-content-center" >
                     <Col> 
                         <Button
