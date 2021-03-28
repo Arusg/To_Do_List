@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
 import { textTruncate } from '../../helpers/utils';
 import DatePicker from "react-datepicker";
-import { formatDate } from '../../helpers/utils';
 import { getTasks } from '../../Store/Actions';
 import styles from './searchStyle.module.css';
 import "react-datepicker/dist/react-datepicker.css";
@@ -110,7 +109,7 @@ function Search({ getTasks }) {
         for (let key in dates) {
             const value = dates[key];
             if (value) {
-                const date = formatDate(value.toISOString());
+                const date = value.toLocaleDateString();
                 params[key] = date;
             }
         }

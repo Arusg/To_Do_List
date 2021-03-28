@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import styles from './contactStyle.module.css';
 
 const requiredErrorMessage = 'Field is required';
 
-export default function Contact(){
+export default function Contact() {
     const [values, setValues] = useState({
         name: '',
         email: '',
@@ -76,7 +76,7 @@ export default function Contact(){
                         else {
                             throw new Error('Something went wrong!');
                         }
-                        
+
                     }
 
                     setValues({
@@ -84,7 +84,7 @@ export default function Contact(){
                         email: '',
                         message: ''
                     });
-                
+
                 })
                 .catch((error) => {
                     console.log('catch error', error);
@@ -102,6 +102,18 @@ export default function Contact(){
         }
 
     };
+
+    const { sendFormSuccess } = this.props;
+
+    useEffect(() => {
+        if (sendFormSuccess) {
+            setValues({
+                name: '',
+                email: '',
+                message: ''
+            });
+        }
+    }, [sendFormSuccess]);
 
     return (
         <Container>
