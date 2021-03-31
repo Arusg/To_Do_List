@@ -8,4 +8,6 @@ export const DELETE_TASK = "DELETE_TASK";
 export const DELETE_TASKS = "DELETE_TASKS";
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGOUT = "LOGOUT";
+export const LOGOUT = "LOGOUT";;
+export const SEND_CONTACT_FORM_SUCCESS = "SEND_CONTACT_FORM_SUCCESS";
+

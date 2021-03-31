@@ -106,6 +106,10 @@ function Register(props) {
                                     value={values.name}
                                     onChange={handleChange}
                                 />
+
+                                <Form.Text className="text-danger" >
+                                        {errors.name}
+                                    </Form.Text>
                             </Form.Group>
                             <Form.Group>
                                 <Form.Control
@@ -116,6 +120,10 @@ function Register(props) {
                                     value={values.surname}
                                     onChange={handleChange}
                                 />
+
+                                <Form.Text className="text-danger" >
+                                        {errors.surname}
+                                    </Form.Text>
                             </Form.Group>
                             <Form.Group>
 

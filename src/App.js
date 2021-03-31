@@ -9,6 +9,7 @@ import NavMenu from './components/NavMenu/NavMenu';
 import SingleTask from './components/pages/SingleTask/SingleTask';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
+import Footer from './components/Footer/Footer'
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Spinner from './components/Spinner/Spinner';
 import { connect } from 'react-redux';
@@ -54,17 +55,17 @@ function App({ loading, successMessage, errorMessage}) {
             exact
           />
          
-          <Route
+          <AuthRoute
             path='/register'
             component={Register}
             type='public'
-            exact={true}
+            exact
           />
           <AuthRoute
             path='/login'
             component={Login}
             type='public'
-            exact={true}
+            exact
           />
           <AuthRoute
             path='/home'
@@ -100,6 +101,8 @@ function App({ loading, successMessage, errorMessage}) {
       </Router>
       { loading && <Spinner />}
       <ToastContainer />
+
+      <Footer />
     </div>
   );
 }

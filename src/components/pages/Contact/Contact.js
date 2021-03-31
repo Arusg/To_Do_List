@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import styles from './contactStyle.module.css';
+import {connect} from 'react-redux';
+import {sendContactForm} from '../../../Store/Actions';
 
 const requiredErrorMessage = 'Field is required';
 
-export default function Contact() {
+function Contact(props) {
     const [values, setValues] = useState({
         name: '',
         email: '',
@@ -50,7 +52,60 @@ export default function Contact() {
 
     };
 
-    const handleSubmit = () => {
+    // const handleSubmit = () => {
+    //     const errorsArr = Object.values(errors);
+    //     const errorsExist = !errorsArr.every(el => el === null);
+
+    //     const valuesArr = Object.values(values);
+    //     const valuesExist = !valuesArr.some(el => el === '');
+
+    //     if (valuesExist && !errorsExist) {
+
+    //         fetch('http://localhost:3001/form', {
+    //             method: 'POST',
+    //             body: JSON.stringify(values),
+    //             headers: {
+    //                 "Content-Type": 'application/json'
+    //             }
+    //         })
+    //             .then(async (response) => {
+    //                 const res = await response.json();
+
+    //                 if (response.status >= 400 && response.status < 600) {
+    //                     if (res.error) {
+    //                         throw res.error;
+    //                     }
+    //                     else {
+    //                         throw new Error('Something went wrong!');
+    //                     }
+
+    //                 }
+
+    //                 setValues({
+    //                     name: '',
+    //                     email: '',
+    //                     message: ''
+    //                 });
+
+    //             })
+    //             .catch((error) => {
+    //                 console.log('catch error', error);
+    //             });
+
+    //         return;
+    //     }
+
+    //     if (!valuesExist && !errorsExist) {
+    //         setErrors({
+    //             name: requiredErrorMessage,
+    //             email: requiredErrorMessage,
+    //             message: requiredErrorMessage
+    //         });
+    //     }
+
+    // };
+
+     const handleSubmit = () => {
         const errorsArr = Object.values(errors);
         const errorsExist = !errorsArr.every(el => el === null);
 
@@ -59,38 +114,8 @@ export default function Contact() {
 
         if (valuesExist && !errorsExist) {
 
-            fetch('http://localhost:3001/form', {
-                method: 'POST',
-                body: JSON.stringify(values),
-                headers: {
-                    "Content-Type": 'application/json'
-                }
-            })
-                .then(async (response) => {
-                    const res = await response.json();
+            props.sendContactForm(values);
 
-                    if (response.status >= 400 && response.status < 600) {
-                        if (res.error) {
-                            throw res.error;
-                        }
-                        else {
-                            throw new Error('Something went wrong!');
-                        }
-
-                    }
-
-                    setValues({
-                        name: '',
-                        email: '',
-                        message: ''
-                    });
-
-                })
-                .catch((error) => {
-                    console.log('catch error', error);
-                });
-
-            return;
         }
 
         if (!valuesExist && !errorsExist) {
@@ -103,7 +128,7 @@ export default function Contact() {
 
     };
 
-    const { sendFormSuccess } = this.props;
+    const {sendFormSuccess} = props;
 
     useEffect(() => {
         if (sendFormSuccess) {
@@ -116,7 +141,7 @@ export default function Contact() {
     }, [sendFormSuccess]);
 
     return (
-        <Container>
+        <Container className={styles.contactPage}>
             <Row className='justify-content-center'>
                 <Col xs={7}>
                     <Form className='mt-5'>
@@ -179,3 +204,14 @@ export default function Contact() {
         </Container>
     );
 };
+
+const mapStateToProps = (state) => {
+    return {
+        sendFormSuccess: state.sendFormSuccess
+    };
+};
+
+const mapDispatchToProps = {
+    sendContactForm
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

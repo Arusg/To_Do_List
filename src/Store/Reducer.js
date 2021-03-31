@@ -1,5 +1,5 @@
 import * as actionTypes from './ActionTypes';
-import {checkLoginStatus} from '../helpers/auth';
+import { checkLoginStatus } from '../helpers/auth';
 
 const defaultState = {
     tasks: [],
@@ -10,7 +10,9 @@ const defaultState = {
     editTaskSuccess: false,
     loading: false,
     successMessage: null,
-    errorMessage: null
+    errorMessage: null,
+    isAuthenticated: checkLoginStatus(),
+    sendFormSuccess: false
 };
 
 
@@ -24,10 +26,9 @@ export default function reducer(state = defaultState, action) {
                 addTaskSuccess: false,
                 deleteTasksSuccess: false,
                 editTasksSuccess: false,
-                editTaskSuccess: false,
                 successMessage: null,
                 errorMessage: null,
-                isAuthenticated: checkLoginStatus()
+                sendFormSuccess: false
             };
         }
         case actionTypes.ERROR: {
@@ -64,7 +65,6 @@ export default function reducer(state = defaultState, action) {
             };
         }
         case actionTypes.DELETE_TASK: {
-
             if (action.from === 'single') {
                 return {
                     ...state,
@@ -138,6 +138,8 @@ export default function reducer(state = defaultState, action) {
                 successMessage: successMessage
             };
         }
+
+
         case actionTypes.REGISTER_SUCCESS: {
             return {
                 ...state,
@@ -156,11 +158,19 @@ export default function reducer(state = defaultState, action) {
 
         case actionTypes.LOGOUT:
             return {
-            ...state,
-            loading: false,
-            isAuthenticated: false
-      }
-    
+                ...state,
+                loading: false,
+                isAuthenticated: false
+            }
+
+        case actionTypes.SEND_CONTACT_FORM_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                sendFormSuccess: true,
+                successMessage: 'Congrats, your message have been sent!!!'
+            }
+
         default: return state;
-}
+    }
 }

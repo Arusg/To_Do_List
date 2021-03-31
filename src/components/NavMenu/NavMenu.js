@@ -1,13 +1,15 @@
 import React from 'react';
 import { Navbar, Nav, Button } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
+import {logout} from '../../helpers/auth'
 import styles from './navMenuStyle.module.css';
 import {connect} from 'react-redux';
 
 function NavMenu({ isAuthenticated }) {
        return (
         <Navbar bg="dark" variant="dark">
-            <Nav className="mr-auto">
+            <Nav className={styles.header}>
+                <div className = {styles.pagesMenu}>
             {
                 isAuthenticated &&
                 <NavLink
@@ -35,9 +37,12 @@ function NavMenu({ isAuthenticated }) {
                 >
                     Contact us
                 </NavLink>
-            {
+                </div>
+            <div className = {styles.menu}> 
+                {
+                
           isAuthenticated ? 
-          <Button variant="outline-primary" className={styles.logout}>Log out </Button> :
+         <Button variant="outline-primary" className={styles.logout} onClick = {logout}>Log out </Button> :
           <>
                 <NavLink
                     to='/login'
@@ -56,7 +61,9 @@ function NavMenu({ isAuthenticated }) {
                     Register
                 </NavLink>
                 </>
+                
             }
+            </div>
             </Nav>
         </Navbar>
     );

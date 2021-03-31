@@ -1,0 +1,12 @@
+.footer {
+    height: 50px;
+    background-color: #2b3135;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footerIcon {
+    margin-left: 15px;
+    font-size: 30px;
+}

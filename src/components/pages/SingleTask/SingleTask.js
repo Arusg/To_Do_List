@@ -6,6 +6,7 @@ import { formatDate } from '../../../helpers/utils';
 import EditTaskModal from '../../editTaskModal';
 import { getTask, deleteTask, editTask } from '../../../Store/Actions';
 import { connect } from 'react-redux';
+import styles from './singleTaskStyle.module.css';
 
 
 class SingleTask extends Component {
@@ -44,7 +45,7 @@ class SingleTask extends Component {
         const { task, disabled, editTask } = this.props;
         
         return (
-            <div className='mt-5'>
+            <div className={styles.singleTaskPage}>
                 <Container >
                     <Row >
                         <Col xs={12}>

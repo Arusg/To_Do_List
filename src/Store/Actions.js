@@ -2,7 +2,7 @@ import request from '../helpers/request';
 import requestWithoutToken from '../helpers/auth';
 import * as actionTypes from './ActionTypes';
 import { history } from '../helpers/history';
-import {saveToken} from '../helpers/auth';
+import { saveToken } from '../helpers/auth';
 
 const apiHost = process.env.REACT_APP_API_HOST;
 
@@ -157,6 +157,25 @@ export function login(data) {
                     type: actionTypes.LOGIN_SUCCESS,
                 });
                 history.push('/');
+            })
+            .catch((err) => {
+                dispatch({
+                    type: actionTypes.ERROR,
+                    error: err.message
+                });
+            });
+    }
+}
+
+export function sendContactForm (data) {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.PENDING });
+        requestWithoutToken(`${apiHost}/form`, 'POST', data)
+            .then(() => {
+                 dispatch({
+                    type: actionTypes.SEND_CONTACT_FORM_SUCCESS
+                });
+                
             })
             .catch((err) => {
                 dispatch({
