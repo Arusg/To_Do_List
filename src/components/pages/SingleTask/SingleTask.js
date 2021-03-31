@@ -1,8 +1,11 @@
-import React, { Component } from 'react';
-import { Card, Button, Container, Row, Col } from 'react-bootstrap';
+
+import React, {Component} from 'react';
+import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { faTrash, faEdit, faCheck, faRedo } from '@fortawesome/free-solid-svg-icons';
 import { formatDate } from '../../../helpers/utils';
+
 import EditTaskModal from '../../editTaskModal';
 import { getTask, deleteTask, editTask } from '../../../Store/Actions';
 import { connect } from 'react-redux';
@@ -11,18 +14,25 @@ import styles from './singleTaskStyle.module.css';
 
 class SingleTask extends Component {
     state = {
+
         openEditModal: false
     };
 
-    componentDidMount() {
+
+    componentDidMount(){
+
         const taskId = this.props.match.params.taskId;
+
         this.props.getTask(taskId);
+
     }
+
 
     componentDidUpdate(prevProps) {
         if (!prevProps.editTaskSuccess && this.props.editTaskSuccess) {
             this.setState({
                 openEditModal: false
+
             });
             return;
         }
@@ -34,11 +44,14 @@ class SingleTask extends Component {
     }
 
 
+
     toggleEditModal = () => {
+
         this.setState({
             openEditModal: !this.state.openEditModal
         });
     };
+
 
     render() {
         const { openEditModal } = this.state;
@@ -131,6 +144,7 @@ class SingleTask extends Component {
             </div>
         );
     }
+
 
 
 };
