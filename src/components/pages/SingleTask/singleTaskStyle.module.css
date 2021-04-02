@@ -1,4 +1,4 @@
 .singleTaskPage {
     margin-top: 10px;
-    height: 88vh;
+    min-height: 88vh;
 }

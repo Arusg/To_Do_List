@@ -8,3 +8,20 @@
   padding-bottom: 1px;
 }
 
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagesMenu {
+  width: 50%;
+}
+
+.menu {
+  width: 50%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

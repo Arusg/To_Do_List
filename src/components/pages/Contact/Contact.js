@@ -52,59 +52,6 @@ function Contact(props) {
 
     };
 
-    // const handleSubmit = () => {
-    //     const errorsArr = Object.values(errors);
-    //     const errorsExist = !errorsArr.every(el => el === null);
-
-    //     const valuesArr = Object.values(values);
-    //     const valuesExist = !valuesArr.some(el => el === '');
-
-    //     if (valuesExist && !errorsExist) {
-
-    //         fetch('http://localhost:3001/form', {
-    //             method: 'POST',
-    //             body: JSON.stringify(values),
-    //             headers: {
-    //                 "Content-Type": 'application/json'
-    //             }
-    //         })
-    //             .then(async (response) => {
-    //                 const res = await response.json();
-
-    //                 if (response.status >= 400 && response.status < 600) {
-    //                     if (res.error) {
-    //                         throw res.error;
-    //                     }
-    //                     else {
-    //                         throw new Error('Something went wrong!');
-    //                     }
-
-    //                 }
-
-    //                 setValues({
-    //                     name: '',
-    //                     email: '',
-    //                     message: ''
-    //                 });
-
-    //             })
-    //             .catch((error) => {
-    //                 console.log('catch error', error);
-    //             });
-
-    //         return;
-    //     }
-
-    //     if (!valuesExist && !errorsExist) {
-    //         setErrors({
-    //             name: requiredErrorMessage,
-    //             email: requiredErrorMessage,
-    //             message: requiredErrorMessage
-    //         });
-    //     }
-
-    // };
-
      const handleSubmit = () => {
         const errorsArr = Object.values(errors);
         const errorsExist = !errorsArr.every(el => el === null);

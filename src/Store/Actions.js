@@ -185,3 +185,23 @@ export function sendContactForm (data) {
             });
     }
 }
+
+export function getUser() {
+
+    return (dispatch) => {
+        dispatch({ type: actionTypes.PENDING });
+
+        request(`${apiHost}/user`)
+            .then(() => {
+                dispatch({ 
+                    type: actionTypes.GET_USER                    
+                });
+            })
+            .catch((err) => {
+                dispatch({
+                    type: actionTypes.ERROR,
+                    error: err.message
+                });
+            });
+    }
+}

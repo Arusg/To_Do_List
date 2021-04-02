@@ -156,7 +156,7 @@ class Todo extends Component {
                         <h2 className={styles.title}>ToDo List</h2>
                     </Col>
                 </Row>
-                <Row>
+                    <Row >
                     <Col>
                         <Search />
                     </Col>

@@ -26,6 +26,7 @@ export default function reducer(state = defaultState, action) {
                 addTaskSuccess: false,
                 deleteTasksSuccess: false,
                 editTasksSuccess: false,
+                editTaskSuccess: false,
                 successMessage: null,
                 errorMessage: null,
                 sendFormSuccess: false
@@ -170,6 +171,13 @@ export default function reducer(state = defaultState, action) {
                 sendFormSuccess: true,
                 successMessage: 'Congrats, your message have been sent!!!'
             }
+
+        case actionTypes.GET_USER: {
+            return {
+                ...state,
+                loading: false,
+            };
+        }
 
         default: return state;
     }
