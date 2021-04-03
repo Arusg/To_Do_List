@@ -149,7 +149,7 @@ class Todo extends Component {
         });
  
         return (
-        <div>
+        <div className={styles.todo}>
             <Container>
                 <Row >
                     <Col className="text-center">
