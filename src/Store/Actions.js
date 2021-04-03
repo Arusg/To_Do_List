@@ -192,9 +192,9 @@ export function getUser() {
         dispatch({ type: actionTypes.PENDING });
 
         request(`${apiHost}/user`)
-            .then(() => {
+            .then((user) => {
                 dispatch({ 
-                    type: actionTypes.GET_USER                    
+                    type: actionTypes.GET_USER, user                 
                 });
             })
             .catch((err) => {

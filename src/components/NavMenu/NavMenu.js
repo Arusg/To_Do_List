@@ -9,19 +9,20 @@ import {connect} from 'react-redux';
 
 
 function NavMenu(props) {
+    const {isAuthenticated, getUser, user} = props
 
     useEffect(() => {
-        if (props.isAuthenticated) {
-            props.getUser();
+        if (isAuthenticated) {
+            getUser();
         }
-    });
-
+    },[]);
+    
        return (
         <Navbar bg="dark" variant="dark">
             <Nav className={styles.header}>
                 <div className = {styles.pagesMenu}>
             {
-                props.isAuthenticated &&
+                isAuthenticated &&
                 <NavLink
                     to='/'
                     activeClassName={styles.active}
@@ -51,9 +52,12 @@ function NavMenu(props) {
             <div className = {styles.menu}> 
                 {
                 
-          props.isAuthenticated ? 
+          isAuthenticated ? 
+        <div>
+        { user ? <p className = {styles.user}>  User { user.name} { user.surname} </p> : ''}
+        <Button variant="outline-primary" className={styles.logout} onClick = {logout}>Log out </Button>
         
-        <Button variant="outline-primary" className={styles.logout} onClick = {logout}>Log out </Button>:
+        </div>:
         
           <>
                 <NavLink
@@ -83,7 +87,9 @@ function NavMenu(props) {
 
 const mapStateToProps = (state)=>{
     return {
-    isAuthenticated: state.isAuthenticated
+    isAuthenticated: state.isAuthenticated,
+    user: state.user,
+    
     }
 };
 

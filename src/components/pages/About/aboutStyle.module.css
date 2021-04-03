@@ -1,18 +1,11 @@
 .about {
     margin: auto;
     min-height: 86vh;
-    width: 90%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.aboutProject {
-    margin-left: 30px;
-}
 
-img {
-    /*margin-left: 30px;*/
-    height: 70vh;
-    width: 35vw;
-}
+

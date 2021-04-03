@@ -13,6 +13,7 @@ const defaultState = {
     errorMessage: null,
     isAuthenticated: checkLoginStatus(),
     sendFormSuccess: false
+    
 };
 
 
@@ -176,6 +177,8 @@ export default function reducer(state = defaultState, action) {
             return {
                 ...state,
                 loading: false,
+                user: action.user
+               
             };
         }
 
