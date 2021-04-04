@@ -1,4 +1,5 @@
 import * as actionTypes from './ActionTypes';
+import { checkLoginStatus } from '../helpers/auth';
 
 const defaultState = {
     tasks: [],
@@ -9,32 +10,35 @@ const defaultState = {
     editTaskSuccess: false,
     loading: false,
     successMessage: null,
-    errorMessage: null
-    };
+    errorMessage: null,
+    isAuthenticated: checkLoginStatus(),
+    sendFormSuccess: false
+};
 
 
 export default function reducer(state = defaultState, action) {
 
     switch (action.type) {
-        case actionTypes.PENDING:{
-        return {
-          ...state,
-          loading: true,
-          addTaskSuccess: false,
-          deleteTasksSuccess: false,
-          editTasksSuccess: false,
-          editTaskSuccess: false,
-          successMessage: null,
-          errorMessage: null            
-        };
-      }
-        case actionTypes.ERROR:{
-        return {
-          ...state,
-          loading: false,
-          errorMessage: action.error
-        };
-      }
+        case actionTypes.PENDING: {
+            return {
+                ...state,
+                loading: true,
+                addTaskSuccess: false,
+                deleteTasksSuccess: false,
+                editTasksSuccess: false,
+                editTaskSuccess: false,
+                successMessage: null,
+                errorMessage: null,
+                sendFormSuccess: false
+            };
+        }
+        case actionTypes.ERROR: {
+            return {
+                ...state,
+                loading: false,
+                errorMessage: action.error
+            };
+        }
 
         case actionTypes.GET_TASKS: {
             return {
@@ -44,13 +48,13 @@ export default function reducer(state = defaultState, action) {
             };
         }
 
-        case actionTypes.GET_TASK:{
-        return {
-          ...state,
-          task: action.task,
-          loading: false
-        };
-      }
+        case actionTypes.GET_TASK: {
+            return {
+                ...state,
+                task: action.task,
+                loading: false
+            };
+        }
 
         case actionTypes.ADD_TASK: {
             return {
@@ -62,7 +66,6 @@ export default function reducer(state = defaultState, action) {
             };
         }
         case actionTypes.DELETE_TASK: {
-
             if (action.from === 'single') {
                 return {
                     ...state,
@@ -100,13 +103,26 @@ export default function reducer(state = defaultState, action) {
             };
         }
         case actionTypes.EDIT_TASK: {
+            let successMessage = 'Task edited successfully!!!';
+
+            if (action.status) {
+                if (action.status === 'done') {
+                    successMessage = 'Congrats, you have completed the task!!!';
+                }
+                else {
+                    successMessage = 'The task is active now!!!';
+                }
+            }
+
+
+
             if (action.from === 'single') {
                 return {
                     ...state,
                     task: action.editedTask,
                     editTaskSuccess: true,
                     loading: false,
-                    successMessage: 'Task edited successfully!'
+                    successMessage: successMessage
                 };
 
             }
@@ -120,9 +136,55 @@ export default function reducer(state = defaultState, action) {
                 tasks,
                 editTasksSuccess: true,
                 loading: false,
-                successMessage: 'Task edited successfully!'
+                successMessage: successMessage
             };
         }
+
+
+        case actionTypes.REGISTER_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                successMessage: 'Congrats, you are a new user now!!!'
+            };
+        }
+
+        case actionTypes.LOGIN_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                isAuthenticated: true
+                
+            };
+        }
+
+        case actionTypes.LOGOUT: {
+            return {
+                ...state,
+                loading: false,
+                isAuthenticated: false
+            }
+        }
+
+        case actionTypes.SEND_CONTACT_FORM_SUCCESS: {
+            return {
+                ...state,
+                loading: false,
+                sendFormSuccess: true,
+                successMessage: 'Congrats, your message have been sent!!!'
+            }
+        }
+
+        case actionTypes.GET_USER: {
+            return {
+                ...state,
+                loading: false,
+                user: action.user,
+                getUserInfo: true
+               
+            };
+        }
+
         default: return state;
     }
 }

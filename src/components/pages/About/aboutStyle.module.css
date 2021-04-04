@@ -1,0 +1,11 @@
+.about {
+    margin: auto;
+    min-height: 86vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+

@@ -149,14 +149,14 @@ class Todo extends Component {
         });
  
         return (
-        <div>
+        <div className={styles.todo}>
             <Container>
                 <Row >
                     <Col className="text-center">
                         <h2 className={styles.title}>ToDo List</h2>
                     </Col>
                 </Row>
-                <Row>
+                    <Row >
                     <Col>
                         <Search />
                     </Col>

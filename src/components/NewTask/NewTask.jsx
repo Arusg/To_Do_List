@@ -1,4 +1,4 @@
-import React, { PureComponent} from 'react';
+import React, { PureComponent, createRef} from 'react';
 import { Button, FormControl,Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from "react-datepicker";
@@ -8,12 +8,23 @@ import {connect} from 'react-redux';
 import {addTask} from '../../Store/Actions';
 
 class NewTask extends PureComponent {
+    constructor(props){
+    super(props);
     
-        state = {
+
+        this.state = {
             title: '',
             description: '',
             date: new Date()
         };
+
+    this.inputRef = createRef();
+  }
+
+    componentDidMount(){
+      this.inputRef.current.focus();
+    }
+        
  
 
     handleChange = (event) => {
@@ -75,7 +86,7 @@ class NewTask extends PureComponent {
                     </Modal.Header>
                     <Modal.Body>
                         <FormControl
-                            placeholder="Title" onChange={this.handleChange} name='title' onKeyPress={this.handleKeyDown} className='mb-3' 
+                            placeholder="Title" onChange={this.handleChange} name='title' onKeyPress={this.handleKeyDown} className='mb-3' ref = {this.inputRef} 
                         />
                         <FormControl
                             placeholder="Description" as="textarea" 

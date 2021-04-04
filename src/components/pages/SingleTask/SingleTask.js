@@ -2,11 +2,14 @@
 import React, {Component} from 'react';
 import {Card, Button, Container, Row, Col} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import {formatDate} from '../../../helpers/utils';
+
+import { faTrash, faEdit, faCheck, faRedo } from '@fortawesome/free-solid-svg-icons';
+import { formatDate } from '../../../helpers/utils';
+
 import EditTaskModal from '../../editTaskModal';
-import  {getTask,  deleteTask} from '../../../Store/Actions';
-import {connect} from 'react-redux';
+import { getTask, deleteTask, editTask } from '../../../Store/Actions';
+import { connect } from 'react-redux';
+import styles from './singleTaskStyle.module.css';
 
 
 class SingleTask extends Component {
@@ -41,7 +44,7 @@ class SingleTask extends Component {
     }
 
 
-    
+
     toggleEditModal = () => {
 
         this.setState({
@@ -52,9 +55,10 @@ class SingleTask extends Component {
 
     render() {
         const { openEditModal } = this.state;
-        const {task} = this.props;
+        const { task, disabled, editTask } = this.props;
+        
         return (
-            <div className='mt-5'>
+            <div className={styles.singleTaskPage}>
                 <Container >
                     <Row >
                         <Col xs={12}>
@@ -68,13 +72,45 @@ class SingleTask extends Component {
                                                 Description: {task.description}
                                             </Card.Text>
                                             <Card.Text>
+                                                Status: {task.status}
+                                            </Card.Text>
+                                            <Card.Text> 
+                                                Created at: {formatDate(task.created_at)}
+                                            </Card.Text>
+                                            <Card.Text>
                                                 Date: {formatDate(task.date)}
                                             </Card.Text>
+                                            {
+                                                task.status === "active" ?
+                                                    <Button
+                                                        className='m-1'
+                                                        variant="success"
+                                                        disabled={disabled}
+                                                        onClick={() => editTask({
+                                                            status: 'done',
+                                                            _id: task._id
+                                                        }, "single")}
+                                                    >
+                                                        <FontAwesomeIcon icon={faCheck} />
+                                                    </Button> :
+
+                                                    <Button
+                                                        className='m-1'
+                                                        variant="secondary"
+                                                        disabled={disabled}
+                                                        onClick={() => editTask({
+                                                            status: 'active',
+                                                            _id: task._id
+                                                        }, "single")}
+                                                    >
+                                                        <FontAwesomeIcon icon={faRedo} />
+                                                    </Button>
+                                            }
                                             <Button
                                                 className='m-1'
                                                 variant="warning"
                                                 onClick={this.toggleEditModal}
-                                                
+
                                             >
                                                 <FontAwesomeIcon icon={faEdit} />
                                             </Button>
@@ -122,7 +158,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     getTask,
-    deleteTask
+    deleteTask,
+    editTask,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);

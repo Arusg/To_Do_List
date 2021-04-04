@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { InputGroup, Button, FormControl, DropdownButton, Dropdown } from 'react-bootstrap';
+import { InputGroup, Button, FormControl, DropdownButton, Dropdown, Row, Col, Container } from 'react-bootstrap';
 import { textTruncate } from '../../helpers/utils';
 import DatePicker from "react-datepicker";
-import { formatDate } from '../../helpers/utils';
 import { getTasks } from '../../Store/Actions';
 import styles from './searchStyle.module.css';
 import "react-datepicker/dist/react-datepicker.css";
@@ -110,7 +109,7 @@ function Search({ getTasks }) {
         for (let key in dates) {
             const value = dates[key];
             if (value) {
-                const date = formatDate(value.toISOString());
+                const date = value.toLocaleDateString();
                 params[key] = date;
             }
         }
@@ -119,11 +118,12 @@ function Search({ getTasks }) {
     };
 
     return (
+
         <div className="mb-3">
             <InputGroup >
 
                 <FormControl
-                    className= {styles.searchBox}
+                    className={styles.searchBox}
                     placeholder="Search"
                     onChange={(event) => setSearch(event.target.value)}
                 />
@@ -176,25 +176,34 @@ function Search({ getTasks }) {
                 </InputGroup.Append>
 
             </InputGroup>
+            <Container className={styles.searchInput}>
+                <Row>
+                    {
+                        dateOptions.map((option, index) => (
 
-            {
-                dateOptions.map((option, index) => (
-                    <div
-                        className= {styles.filter}
-                        key={index}
-                    >
-                        <span>{option.label} </span> <br/>
-                        <DatePicker
-                            className= {styles.filterBoxes}
-                            selected={dates[option.value]}
-                            onChange={(value) => handleChangeDate(value, option.value)}
-                        />
-                    </div>
-                ))
-            }
+                            <Col
+                                className={styles.filter}
+                                key={index}
+                            >
+                                <div className={styles.filterBoxe}>
+                                    <span>{option.label} </span> <br />
+                                    <DatePicker
+                                        className={styles.filterBoxes}
+                                        selected={dates[option.value]}
+                                        onChange={(value) => handleChangeDate(value, option.value)}
+                                    />
+                                </div>
+                            </Col>
+                        ))
+                    }
+                </Row>
+            </Container>
         </div>
+
     )
+
 }
+
 
 const mapDispatchToProps = {
     getTasks
