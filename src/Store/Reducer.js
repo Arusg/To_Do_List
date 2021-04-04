@@ -13,7 +13,6 @@ const defaultState = {
     errorMessage: null,
     isAuthenticated: checkLoginStatus(),
     sendFormSuccess: false
-    
 };
 
 
@@ -155,29 +154,33 @@ export default function reducer(state = defaultState, action) {
                 ...state,
                 loading: false,
                 isAuthenticated: true
+                
             };
         }
 
-        case actionTypes.LOGOUT:
+        case actionTypes.LOGOUT: {
             return {
                 ...state,
                 loading: false,
                 isAuthenticated: false
             }
+        }
 
-        case actionTypes.SEND_CONTACT_FORM_SUCCESS:
+        case actionTypes.SEND_CONTACT_FORM_SUCCESS: {
             return {
                 ...state,
                 loading: false,
                 sendFormSuccess: true,
                 successMessage: 'Congrats, your message have been sent!!!'
             }
+        }
 
         case actionTypes.GET_USER: {
             return {
                 ...state,
                 loading: false,
-                user: action.user
+                user: action.user,
+                getUserInfo: true
                
             };
         }

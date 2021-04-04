@@ -3,7 +3,7 @@
 }
 
 .contactPage {
-    height: 88vh;
+    min-height: 88vh;
 }
 
 .invalid, .invalid:focus{

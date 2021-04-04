@@ -10,12 +10,12 @@ import {connect} from 'react-redux';
 
 function NavMenu(props) {
     const {isAuthenticated, getUser, user} = props
-
+console.log(user);
     useEffect(() => {
         if (isAuthenticated) {
             getUser();
         }
-    },[]);
+    }, [isAuthenticated, getUser ]);
     
        return (
         <Navbar bg="dark" variant="dark">
@@ -88,8 +88,7 @@ function NavMenu(props) {
 const mapStateToProps = (state)=>{
     return {
     isAuthenticated: state.isAuthenticated,
-    user: state.user,
-    
+    user: state.user    
     }
 };
 
